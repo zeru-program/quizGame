@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
   </head>
   <body>
-    <img class="overlay" src="assets/overlay2.png" alt="" />
+    <img class="overlay" src="../assets/overlay2.png" alt="" />
     <div id="pembuka">
-      <img class="icon" src="assets/icon.png" alt="" />
+      <img class="icon" src="../assets/icon.png" alt="" />
         <br />
         <br />
         <br />
@@ -35,7 +35,7 @@
           class="volOn"
           id="onGbrBS"
           onclick="offVolumeBS()"
-          src="assets/onvolume.png"
+          src="../assets/onvolume.png"
           alt=""
         />
 
@@ -43,7 +43,7 @@
           class="volOf"
           id="ofGbrBS"
           onclick="onVolumeBS()"
-          src="assets/mute.png"
+          src="../assets/mute.png"
           alt=""
         />
       </div>
@@ -57,7 +57,7 @@
           class="volOn"
           id="onGbrSFX"
           onclick="offVolumeSFX()"
-          src="assets/onvolume.png"
+          src="../assets/onvolume.png"
           alt=""
         />
 
@@ -65,7 +65,7 @@
           class="volOf"
           id="ofGbrSFX"
           onclick="onVolumeSFX()"
-          src="assets/mute.png"
+          src="../assets/mute.png"
           alt=""
         />
       </div>
@@ -78,20 +78,20 @@
     </div>
 
     <audio id="myAudio" controls autoplay loop>
-      <source src="assets/backsound.mp3" type="audio/mp3" />
+      <source src="../assets/backsound.mp3" type="audio/mp3" />
     </audio>
     <audio class="sfxAudio" id="myAudioT" controls autoplay>
-      <source src="assets/true.mp3" type="audio/mp3" />
+      <source src="../assets/true.mp3" type="audio/mp3" />
     </audio>
     <audio class="sfxAudio" id="myAudioF" controls autoplay>
-      <source src="assets/false.mp3" type="audio/mp3" />
+      <source src="../assets/false.mp3" type="audio/mp3" />
     </audio>
 
     <div class="gear">
-      <img src="assets/gear.png" onclick="settingDisplay()" alt="settings" />
+      <img src="../assets/gear.png" onclick="settingDisplay()" alt="settings" />
     </div>
     <div class="containerStart">
-      <img class="logo" src="assets/logo.png" alt="" />
+      <img class="logo" src="../assets/logo.png" alt="" />
       <div class="text">
         <p class="judul" id="displayJudul">
         
@@ -187,7 +187,7 @@ function checkInput() {
       }
 
       function pindahHalaman() {
-        window.location.href = "ha.html";
+        window.location.href = "/selectLevel";
       }
     </script>
   </body>
