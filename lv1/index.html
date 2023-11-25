@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game kata</title>
+   <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  </head>
+  <body>
+  <img class="overlay" src="assets/overlay2.png" alt="">
+    <div id="setting">
+      <p class="txtAudioInfo">Backsound</p>
+    <div class="dalset">
+      <img class="volOn" id="onGbrBS" onclick="offVolumeBS()" src="assets/onvolume.png" alt="">
+      
+      <img class="volOf" id="ofGbrBS" onclick="onVolumeBS()" src="assets/mute.png" alt="">
+    </div>
+    <br />
+    <br />
+    <br />
+      
+      <p class="txtAudioInfo">Sfx</p>
+    <div class="dalset">
+      <img class="volOn" id="onGbrSFX" onclick="offVolumeSFX()" src="assets/onvolume.png" alt="">
+      
+      <img class="volOf" id="ofGbrSFX" onclick="onVolumeSFX()" src="assets/mute.png" alt="">
+    </div>
+    <br />
+    <br />
+    <div class="dalset">
+    
+    </div>
+    
+      
+    <div class="option">
+      <img class="exit" src="assets/exit.png" onclick="exitClick()" alt="">
+    <button class="closeSet" onclick="closeToggleST()">OK</button>
+    </div>
+  </div>
+
+    <audio id="myAudio" controls autoplay loop>
+  <source src="assets/backsound.mp3" type="audio/mp3">
+</audio>
+    <audio class="sfxAudio" id="myAudioT" controls autoplay>
+  <source src="assets/true.mp3" type="audio/mp3">
+</audio>
+    <audio class="sfxAudio" id="myAudioF" controls autoplay>
+  <source src="assets/false.mp3" type="audio/mp3">
+</audio>
+
+    <div class="gear">
+      
+        <img src="assets/gear.png" onclick="settingDisplay()" alt="settings">
+      
+    </div>
+    
+    <div id="pembuka">
+      <img class="icon" src="assets/icon.png" alt="">
+      <p class="jpembuka">Level 1</p>
+      <br />
+      <p class="ppembuka">
+        Soal berupa umum dan random, gak susah-susah amat kok<br />
+        Ati-ati ada beberapa jebakan ! <br><br> Gunakan mode getar atau dering<br> dan volume up untuk kualitas game yang maksimal !
+      </p>
+      <br />
+      <br />
+      <button class="close" id="startLagu" onclick="closeToggle()">X</button>
+    </div>
+    <div id="fullQ">
+      <img class="icon" src="assets/icon.png" alt="">
+      <p id="ppembuka" class="ppembuka">
+      
+      </p>
+      <button class="close" onclick="closeToggleFQ()">Ulang soal</button>
+    </div>
+
+    <div id="userPoints" class="user-points"><img class="poin" src="assets/poin.png" alt="">0</div>
+      <p id="question-counter"></p>
+      <p class="question-counter-per">pertanyaan</p>
+    <div class="container">
+      <h1 id="question"></h1>
+      <input type="text" id="answer" placeholder="Jawabanmu..." cols="20" ></input>
+      <br />
+
+      <button class="button" onclick="checkAnswer()">Jawab</button>
+      <button class="button" onclick="clearText()">
+      Clear
+      </button>
+      <br>
+      <img src="assets/clueIcons.png" onclick="showClue(clueHint)" id="clue">
+    </div>
+    
+    <!-- text clue -->
+    <div id="clueT" class="message-container">
+    </div>
+    
+    <!-- true-->
+    <div id="Message" class="message-container">
+      <p id="messageTextT"></p>
+    </div>
+    
+    <!-- false-->
+    <div id="falseMessage" class="message-container">
+      <img class="icon" src="assets/false.png" alt="">
+      <p id="messageTextF"></p>
+    </div>
+    
+    <!-- unknown-->
+    <div id="unknownMessage" class="message-container">
+      <img class="icon" src="assets/unknown.png" alt="">
+      <p id="messageTextU"></p>
+    </div>
+    
+    
+    <div id="answerMessage" class="message-container">
+      <img class="icon" src="assets/true.png" alt="">
+      <p id="messageText"></p>
+    </div>
+    
+    <div id="clueMessage" class="message-container clue">
+  <p id="clueText"> </p>
+</div>
+        
+
+    <script type="text/javascript" charset="utf-8">
+    
+      let currentQuestion = 0;
+      let userPoints = 0;
+      let userClue = 0;
+      let userSalah = 0;
+    
+      function closeToggle() {
+        document.getElementById("pembuka").style.display = "none";
+userPoints += 10;
+// Simpan nilai userPoints di local storage
+localStorage.setItem('userPoints', userPoints);
+document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+      }
+      function closeToggleFQ() {
+        document.getElementById("fullQ").style.display = "none";
+      userClue = 0;
+      userSalah = 0;
+      }
+      function closeToggleCL() {
+        document.getElementById("clueMessage").style.display = "none";
+        document.getElementById("clueT").style.display = "none";
+      }
+      function closeToggleCL1() {
+        document.getElementById("clueT").style.display = "none";
+      }
+      function closeToggleST() {
+        document.getElementById("setting").style.display = "none";
+      }
+      document.getElementById('startLagu').addEventListener('click', function() {
+    var audio = document.getElementById('myAudio');
+    audio.play();
+    audio.volume = 0.1;
+});
+
+      const questions = [
+  { 
+    clue: "hewan apa yang tidak ada kakinya?", 
+    answers: ["banyak"],
+    clueHint: "b _ _ y _ _",
+  },
+  { 
+    clue: "Apa nama ibu kota Indonesia?", 
+    answers: ["Jakarta"],
+    clueHint: "J _ k _ _ _ a",
+  },
+  { 
+    clue: "apa binatang yang mempunyai belalai panjang?",
+    answers: ["gajah"],
+    clueHint: "g a _ _ _",
+  },
+  { 
+    clue: "berapakah jumlah hari dalam 1 minggu?", 
+    answers: ["7", "tujuh hari", "7 hari"],
+    clueHint: "hari dalam satu minggu = 2+5+14-7",
+  },
+  { 
+    clue: "Apa nama planet yang paling besar dan panas ?", 
+    answers: ["matahari"],
+    clueHint: "M _ ",
+  },
+  { 
+    clue: "hitung hasil berikut, budi mempunyai 2 apel ia membagikan nya ke Asep 1 lalu budi mendapatkan apel lagi 7654 buah. berapa sisa buah budi?", 
+    answers: ["7655", "7655 buah"],
+    clueHint: "7655",
+  },
+  { 
+    clue: "aku sering dipakai orang setiap hari, bahkan setiap saat, siapakah aku?", 
+    answers: ["hp", "handphone"],
+    clueHint: "handphone lah",
+  },
+  { 
+    clue: "7+3 = ?", 
+    answers: ["10"],
+    clueHint: "10",
+  },
+  { 
+    clue: "saat terburu-buru lebih baik berjalan apa berlari?", 
+    answers: ["berlari", "lari"],
+    clueHint: "berlari",
+  },
+  { 
+    clue: "bahasa inggrisnya makan kan eat, kalau bahasa Inggris nya memakan?", 
+    answers: ["eating"],
+    clueHint: "eating",
+  },
+  { 
+    clue: "nama aplikasi untuk mendownload aplikasi?", 
+    answers: ["playstore"],
+    clueHint: "play _ _ _ _ _",
+  },
+  { 
+    clue: "budi punya teman yang berkulit Hitam, ia menghargai perbedaan kulit temannya, pertanyaan nya apa warna kulit budi?", 
+    answers: ["putih"],
+    clueHint: "lawan kata hitam",
+  },
+  { 
+    clue: "kambing dan sapi memiliki?", 
+    answers: ["daging"],
+    clueHint: "daging",
+  },
+  { 
+    clue: "jika 1x10 = 10, berapa 20x1 ?", 
+    answers: ["20"],
+    clueHint: "19+1",
+  },
+  { 
+    clue: "warna kulit orang asia", 
+    answers: ["putih", "merah", "coklat"],
+    clueHint: "merah atau coklat atau putih",
+  },
+  { 
+    clue: "aku hari yang paling ditakuti", 
+    answers: ["senin"],
+    clueHint: "senin lah",
+  },
+  { 
+    clue: "kaki seribu mempunyai berapa kaki?", 
+    answers: ["seribu", "1000"],
+    clueHint: "seribu",
+  },
+  { 
+    clue: "apa singkatan COVID-19?", 
+    answers: ["Corona Virus 2019", "Corona Virus 19", "Corona Virus Diase 2019", "Corona Virus Diase 19"],
+    clueHint: "Corona Virus 2019",
+  },
+  { 
+    clue: "ada 4 buah balon, yaitu balon merah,biru,hijau,dan kuning, salah satu balon jatuh ke halaman rumput. Balon warna apa yang jatuh?", 
+    answers: ["hijau"],
+    clueHint: "hijau, karena nyatu warnanya dengan rumput",
+  },
+  { 
+    clue: "5+3 ?", 
+    answers: ["delapan"],
+    clueHint: "delapan",
+  },
+];
+
+    
+
+  function displayQuestion() {
+  const currentQuestionObj = questions[currentQuestion];
+  document.getElementById("question").textContent = currentQuestionObj.clue;
+
+  const questionCounter = document.getElementById("question-counter");
+  questionCounter.textContent = `${currentQuestion + 1}/${questions.length}`;
+  
+  const clueImg = document.getElementById("clue");
+  clueImg.onclick = function() {
+    showClue(currentQuestionObj.clueHint);
+  };
+}
+      
+function showClue(clueHint) {
+    document.getElementById("clueT").style.display = "flex";
+    document.getElementById("clueT").innerHTML = `Poin kamu ${userPoints} . <br> Harga clue = 10 poin <br> <button onclick="yes()" class="buttonIjo">Beli</button>
+      <button class="close" onclick="closeToggleCL1()">close</button>`;
+}
+function yes() {
+  const clueHint = questions[currentQuestion].clueHint;
+
+  if (userPoints >= 10) {
+      userPoints -= 10;
+      userClue += 1;
+      document.getElementById("clueText").innerHTML = `Clue: ${clueHint} <br><br> <button class="close" onclick="closeToggleCL()">X</button>`;
+     document.getElementById("clueMessage").style.display = "flex";
+      
+      document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+      
+  }  else {
+      document.getElementById("clueText").innerHTML = `Poin kamu tidak mencukupi!`;
+     document.getElementById("clueMessage").style.display = "flex";
+     setTimeout(function () {
+      document.getElementById("clueMessage").style.display = "none";
+      document.getElementById("clueT").style.display = "none";
+    }, 1200);
+    // Poin tidak mencukupi
+  }
+  
+}
+
+function settingDisplay() {
+  document.getElementById("setting").style.display = " flex";
+}
+
+var isSFXMuted = false;
+var isBSMuted = false;
+
+/*volume backsound*/
+function offVolumeBS() {
+  const matiVolB = document.getElementById("myAudio");
+  const displayOfBS = document.getElementById("ofGbrBS");
+  const cutOnBS = document.getElementById("onGbrBS");
+  matiVolB.volume = 0;
+  cutOnBS.style.display = "none";
+  displayOfBS.style.display = "flex";
+  isBSMuted = true;
+}
+
+function onVolumeBS() {
+  const nyalaVolB = document.getElementById("myAudio");
+  const displayOnBS = document.getElementById("onGbrBS");
+  const cutOfBS = document.getElementById("ofGbrBS");
+  nyalaVolB.volume = 0.1;
+  cutOfBS.style.display = "none";
+  displayOnBS.style.display = "flex";
+  isBSMuted = false;
+}
+
+function offVolumeSFX() {
+  const matiVolT = document.getElementById("myAudioT");
+  const displayOfSFX = document.getElementById("ofGbrSFX");
+  const cutOnSFX = document.getElementById("onGbrSFX");
+  matiVolT.volume = 0;
+  cutOnSFX.style.display = "none";
+  displayOfSFX.style.display = "flex";
+  document.getElementById("myAudioF").volume = 0;
+  isSFXMuted = true;
+}
+
+function onVolumeSFX() {
+  const nyalaVolT = document.getElementById("myAudioT");
+  const displayOnSFX = document.getElementById("onGbrSFX");
+  const cutOfSFX = document.getElementById("ofGbrSFX");
+  nyalaVolT.volume = 1;
+  cutOfSFX.style.display = "none";
+  displayOnSFX.style.display = "flex";
+  document.getElementById("myAudioF").volume = 1;
+  isSFXMuted = false;
+}
+
+
+function clearText() {
+  document.getElementById("answer").value = "";
+}
+
+function exitClick() {
+  window.location.href = "/selectLevel";
+}
+
+function checkAnswer() {
+  const userAnswer = document
+    .getElementById("answer")
+    .value.trim()
+    .toLowerCase();
+  const correctAnswers = questions[currentQuestion].answers.map(answer => answer.toLowerCase());
+  const answerMessage = document.getElementById("answerMessage");
+  const messageText = document.getElementById("messageText");
+
+  if (userAnswer === "") {
+    document.getElementById("messageTextU").innerHTML = `<br>Masukkan jawaban anda <br> terlebih dahulu ! <br> 🧐`;
+    document.getElementById("unknownMessage").className = "message-container kosong";
+    document.getElementById("unknownMessage").style.display = "flex";
+    /*
+    nextBtn.setAttribute("disabled", true);
+    */
+    setTimeout(function () {
+      
+    document.getElementById("unknownMessage").style.display = "none";
+    }, 1200);
+  } else {
+    if (correctAnswers.includes(userAnswer)) {
+      userPoints += 5;
+// Simpan nilai userPoints di local storage
+localStorage.setItem('userPoints', userPoints);
+document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+      messageText.innerHTML = "Jawaban kamu Benar ! <br>✅";
+      answerMessage.className = "message-container correct";
+      answerMessage.style.display = "flex";
+      const audioTrue = document.getElementById('myAudioT');
+      if (!isSFXMuted) {
+  audioTrue.play();
+  audioTrue.volume = 1;
+      }
+      
+      /*next question sistem*/
+      /*
+      nextBtn.removeAttribute("disabled");
+      */
+      document.getElementById("answer").value = "";
+      currentQuestion++;
+      
+
+      /*sampe sini <*/
+      
+      // Setelah 2 detik, tutup pesan
+
+      setTimeout(function () {
+        answerMessage.style.display = "none";
+      }, 1200);
+      
+      
+      if (currentQuestion < questions.length) {
+        displayQuestion();
+      } else {
+        document.getElementById("fullQ").style.display = "flex";
+        document.getElementById("ppembuka").innerHTML = `Soal terjawab : 20/20 <br> Poin : ${userPoints} <br>Clue terpakai : ${userClue} kali <br>Salah : ${userSalah} kali<br><br>Bagus! semua pertanyaan<br />
+        udah dijawab ama lu! mantap!<br><button class="buttonIjo" onclick="nextQHal()">Next Question</button>`
+        currentQuestion = 0;
+        displayQuestion();
+      }
+    } else {
+      document.getElementById("messageTextF").innerHTML = `Salah woi, coba lagi gih! <br><p class="emoji">❌</p>`;
+      if (userPoints > 0) {
+          userPoints -= 2;
+// Simpan nilai userPoints di local storage
+localStorage.setItem('userPoints', userPoints);
+document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+        }
+          userSalah += 1;
+        navigator.vibrate(500);
+      document.getElementById("falseMessage").className = "message-container incorrect";
+    document.getElementById("falseMessage").style.display = "flex";
+    const audioFalse = document.getElementById('myAudioF');
+    if (!isSFXMuted) {
+  audioFalse.play();
+  audioFalse.volume = 1;
+    }
+  
+    /*
+      nextBtn.setAttribute("disabled", true);
+      */
+      document.getElementById("answer").value = "";
+      
+      setTimeout(function () {
+    document.getElementById("falseMessage").style.display = "none";
+      }, 1500);
+      
+    }
+  }
+  document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+}
+
+      // ...
+ 
+    function nextQHal(){
+      window.location.href = "/lv2";
+    }
+      
+
+      function nextQuestion() {
+        const answerMessage = document.getElementById("answerMessage");
+        answerMessage.style.display = "none"; 
+        
+        
+        document.getElementById("answer").value = "";
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+          displayQuestion();
+        } else {
+          document.getElementById("fullQ").style.display = "flex";
+          currentQuestion = 0;
+          displayQuestion();
+        }
+      }
+      
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      shuffleArray(questions);
+
+      window.onload = function () {
+                var audio = document.getElementById('myAudio');
+        var audioF = document.getElementById("myAudioF");
+        var audioT = document.getElementById("myAudioT");
+        audio.pause();
+        audioT.pause();
+        audioF.pause();
+        audio.volume = 0;
+        audioT.volume = 0;
+        document.getElementById("pembuka").style.display = "flex";
+        shuffleArray(questions); 
+        displayQuestion();
+        document.getElementById("myAudio").audio.play();
+        document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`
+        
+      };
+    </script>
+  </body>
+</html>
