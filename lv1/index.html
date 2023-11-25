@@ -134,7 +134,7 @@
 userPoints += 10;
 // Simpan nilai userPoints di local storage
 localStorage.setItem('userPoints', userPoints);
-document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
       }
       function closeToggleFQ() {
         document.getElementById("fullQ").style.display = "none";
@@ -387,7 +387,7 @@ function checkAnswer() {
       userPoints += 5;
 // Simpan nilai userPoints di local storage
 localStorage.setItem('userPoints', userPoints);
-document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
       messageText.innerHTML = "Jawaban kamu Benar ! <br>✅";
       answerMessage.className = "message-container correct";
       answerMessage.style.display = "flex";
@@ -429,7 +429,7 @@ document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets
           userPoints -= 2;
 // Simpan nilai userPoints di local storage
 localStorage.setItem('userPoints', userPoints);
-document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
         }
           userSalah += 1;
         navigator.vibrate(500);
@@ -502,7 +502,7 @@ document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets
         shuffleArray(questions); 
         displayQuestion();
         document.getElementById("myAudio").audio.play();
-        document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`
+        document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`
         
       };
     </script>
