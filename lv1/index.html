@@ -132,7 +132,8 @@
       function closeToggle() {
         document.getElementById("pembuka").style.display = "none";
         userPoints += 10;
-    }
+        document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+      }
       function closeToggleFQ() {
         document.getElementById("fullQ").style.display = "none";
       userClue = 0;
@@ -421,7 +422,7 @@ function checkAnswer() {
       document.getElementById("messageTextF").innerHTML = `Salah woi, coba lagi gih! <br><p class="emoji">❌</p>`;
       if (userPoints > 0) {
           userPoints -= 2;
-         }
+        }
           userSalah += 1;
         navigator.vibrate(500);
       document.getElementById("falseMessage").className = "message-container incorrect";
@@ -493,7 +494,7 @@ function checkAnswer() {
         shuffleArray(questions); 
         displayQuestion();
         document.getElementById("myAudio").audio.play();
-        document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`
+        document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`
         
       };
     </script>
