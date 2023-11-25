@@ -492,13 +492,6 @@ function checkAnswer() {
         shuffleArray(questions); 
         displayQuestion();
         document.getElementById("myAudio").audio.play();
-        // Ambil nilai userPoints dari local 
-  let storedUserPoints = localStorage.getItem('userPoints');
-  // Jika nilai tidak null atau undefined, gunakan nilai tersebut
-  if (storedUserPoints !== null && storedUserPoints !== undefined) {
-    userPoints = parseInt(storedUserPoints);
-  }
-  document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
       };
     </script>
   </body>
