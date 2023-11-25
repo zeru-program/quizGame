@@ -104,7 +104,6 @@
 
     <script type="text/javascript" charset="utf-8">
       /*button start */
-      document.getElementById("pembuka").style.display = "flex";
       function closeToggleST() {
         document.getElementById("setting").style.display = "none";
       }
@@ -189,6 +188,19 @@ function checkInput() {
       function pindahHalaman() {
         window.location.href = "/selectLevel";
       }
+      window.onload = function () {
+                var audio = document.getElementById('myAudio');
+        var audioF = document.getElementById("myAudioF");
+        var audioT = document.getElementById("myAudioT");
+        audio.pause();
+        audioT.pause();
+        audioF.pause();
+        audio.volume = 0;
+        audioT.volume = 0;
+        document.getElementById("pembuka").style.display = "flex";
+        document.getElementById("myAudio").audio.play();
+        
+      };
     </script>
   </body>
 </html>
