@@ -132,7 +132,6 @@
       function closeToggle() {
         document.getElementById("pembuka").style.display = "none";
         userPoints += 10;
-        document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
       }
       function closeToggleFQ() {
         document.getElementById("fullQ").style.display = "none";
@@ -287,7 +286,7 @@ function yes() {
       document.getElementById("clueText").innerHTML = `Clue: ${clueHint} <br><br> <button class="close" onclick="closeToggleCL()">X</button>`;
      document.getElementById("clueMessage").style.display = "flex";
       
-      document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+      document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
       
   }  else {
       document.getElementById("clueText").innerHTML = `Poin kamu tidak mencukupi!`;
@@ -444,7 +443,7 @@ function checkAnswer() {
       
     }
   }
-  document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+  document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
 }
 
       // ...
