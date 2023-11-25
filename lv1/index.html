@@ -131,7 +131,8 @@
     
       function closeToggle() {
         document.getElementById("pembuka").style.display = "none";
-        userPoints += 10;
+        userPoints += 10;   
+  document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
       }
       function closeToggleFQ() {
         document.getElementById("fullQ").style.display = "none";
