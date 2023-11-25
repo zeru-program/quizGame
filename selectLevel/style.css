@@ -1,0 +1,419 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Caveat:wght@700&family=DM+Serif+Display&family=Ephesis&family=Josefin+Sans:ital@1&family=Kanit:wght@500&family=Lora:ital@1&family=Pacifico&family=Poppins:wght@600&display=swap');
+   @import url("https://fonts.googleapis.com/css2?family=Aclonica&family=Amatic+SC:wght@400;700&family=Bitter:ital,wght@0,300;0,600;1,400&family=Black+Ops+One&family=Bungee+Shade&family=Exo+2&family=Gloria+Hallelujah&family=Indie+Flower&family=Kanit:ital,wght@0,400;0,600;1,100&family=Lato:ital,wght@0,300;1,300;1,700;1,900&family=Monoton&family=Nunito:wght@200;700;900&family=Permanent+Marker&family=Pixelify+Sans:wght@500&family=Press+Start+2P&family=Rowdies:wght@300&family=Rubik+Moonrocks&display=swap");
+
+      body {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: whitesmoke;
+      }
+
+      .level-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: left;
+        align-items: center;
+      }
+
+      .level-box:active {
+        transform: scale(.9);
+        transition: .3s;
+        background: black;
+      }
+      .level-box:focus {
+        outline: none;
+      }
+      .level-box {
+        outline: none;
+        transition: .3s;
+        user-select: none;
+        margin: 10px 10px;
+        border-radius: 5px;
+        flex-basis: 200;
+        border: 3px solid black;
+        box-shadow: 2px 2px 1px black;
+        background-color: white; /* Warna orange kekuningan muda */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        animation: mov 1.1s steps(2) infinite alternate;
+      }
+     @keyframes mov {
+  0% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px); /* Goyang ke kanan sejauh 10px */
+  }
+}
+      .true {
+        color: black;
+        background: #3afde9;
+        padding: 10px 10px;
+        border-radius: 50%;
+        font-family: "Lora", Sans-Serif;
+        font-weight: 700;
+        text-align: center;
+      }
+      .false {
+        color: black;
+        background: #8d8d8d;
+        padding: 10px 10px;
+        border-radius: 50%;
+        font-family: "Lora", Sans-Serif;
+        font-weight: 700;
+        text-align: center;
+      }
+      .infoLvl {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        flex-direction: column;
+        font-family: "Poppins", Sans-Serif;
+        bottom: 10%;
+      }
+      .infoLvl button:active {
+        transform: scale(.9);
+        transition: 0.4s;
+      }
+      .infoLvl button {
+        user-select: none;
+        transition: 0.4s;
+  background: #88eb82;
+  box-shadow: 2px 3px 1px black;
+  font-family: "Rowdies", Sans-Serif;
+  border-radius: 3px;
+  margin-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px solid black;
+        font-family: "Poppins", Sans-Serif;
+      }
+      .pilihLevel {
+        position: fixed;
+        font-family: "Poppins", Sans-Serif;
+        user-select: none;
+        top: 10%;
+        animation: maju 3s infinite alternate ease-in-out;
+      }
+      @keyframes maju {
+        from {
+         transform: scale(.9);
+         transition: .5s;
+        }
+        to {
+         transform: scale(1);
+         transition: .5s;
+        }
+      }
+      #popupTerkunci{
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #c98181;
+        color: black;
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 5px;
+        flex-basis: 200;
+        border: 5px dashed black;
+      }
+      #isiTerkunci{
+        text-align: center;
+        font-size: 2em;
+        font-family: "Pacifico", Sans-Serif;
+      }
+      #pembuka{
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #c98181;
+        color: black;
+        position: absolute;
+        width: 80%;
+        height: 90%;
+        border-radius: 5px;
+        border: 5px dashed black;
+      }
+      #isiPem{
+        text-align: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-family: "Pacifico", Sans-Serif;
+      }
+      .closeOK:active{
+        transform: scale(.9);
+        transition: .3s;
+        background: black;
+        color: white;
+      }
+      .closeOK{
+        transition: .3s;
+        user-select: none;
+        font-family: "Lora", Sans-Serif;
+        border: 3px solid black;
+        border-radius: 3px;
+        background: white;
+        font-weight: 800;
+        padding: 5px 15px 5px 15px;
+        box-shadow: 2px 2px 1px black;
+      }
+      audio {
+        overflow: hidden;
+        display: none;
+      }
+      
+.dalset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#setting {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  background: whitesmoke;
+  color: black;
+  width: 70%;
+  height: 80%;
+  padding: 30px 30px 30px;
+  border: 3px solid black;
+  border-radius: 5px;
+  outline: none;
+  font-family: "Black Ops One", Sans-Serif;
+  position: fixed;
+  z-index: 99999999999999;
+}
+audio {
+  display: none;
+  overflow: hidden;
+}
+.volOf{
+  text-align: center;
+}
+#onGbrBS{
+  display: flex;
+}
+#ofGbrBS{
+  display: none;
+}
+#onGbrSFX{
+  display: flex;
+}
+#ofGbrSFX{
+  display: none;
+}
+.option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ .closeSet:active {
+  transform: scale(.9);
+}
+.closeSet{
+  transition: .4s;
+  border: none;
+  background: white;
+  color: black;
+  margin-left: 100%;
+  margin-bottom: 10px;
+  box-shadow: 2px 3px 1px black;
+  font-family: "Rowdies", Sans-Serif;
+  border-radius: 3px;
+  border: 2px solid black;
+}
+.gear:hover {
+  text-decoration: none;
+  list-style: none;
+  background: none;
+}
+.gear {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  animation: putar 1s linear alternate-reverse infinite ;
+}
+@keyframes putar {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(100deg);
+  }
+}
+.gear img {
+}
+.txtAudioInfo {
+  font-size: 1em;
+}
+.volOf {
+  width: 80px;
+}
+.volOn {
+  width: 80px;
+}
+.exit {
+  width: 50px;
+}
+#openiL {
+  display: none;
+  flex-direction: column;
+  padding: 30px 30px;
+  width: 70%;
+  height: 80%;
+  z-index: 999999999999999;
+  border: 3px solid black;
+  border-radius: 5px;
+  background: white;
+  position: absolute;
+  text-align: center;
+  font-family: "Poppins", Sans-Serif;
+}
+.iLv button {
+  border: none;
+  background: white;
+  color: black;
+  padding: 10px 20px;
+  box-shadow: 2px 3px 1px black;
+  font-family: "Rowdies", Sans-Serif;
+  border-radius: 3px;
+  border: 2px solid black;
+}
+.user-points{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Aclonica", Sans-Serif;
+  text-align: center;
+}
+.poin{
+  width: 20px;
+  padding-right: 5px;
+}
+.overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  animation: pudar 3s alternate ease-in-out infinite;
+}
+@keyframes pudar {
+  from{
+    transition: 1s;
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to{
+    transition: 1s;
+    transform: translateY(0px);
+    opacity: 30%;
+  }
+}
+
+@media screen and (max-width: 368px){
+  .gear img {
+    width: 30px;
+  }
+  .level-box {
+    width: 50px;
+    height: 50px;
+  }
+  .true {
+    font-size: .4em;
+  }
+  .false {
+    font-size: .4em;
+  }
+  #onGbrBS {
+    width: 50px;
+  }
+  #onGbrSFX {
+    width: 50px;
+  }
+  #ofGbrBS {
+    width: 50px;
+  }
+  #ofGbrSFX {
+    width: 50px;
+  }
+  .closeSet {
+    font-size: 1em;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+  }
+}
+
+
+@media screen and (min-width: 368px){
+  .gear img {
+    width: 40px;
+  }
+  .closeSet {
+    font-size: 1.5em;
+  }
+  .isiPem {
+    font-size: 1em;
+  }
+  .level-box {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+
+@media screen and (min-width: 768px){
+  .gear img {
+    width: 70px;
+  }
+  .user-points img{
+    width: 50px;
+  }
+  .pilihLevel {
+    font-size: 2em;
+  }
+  .infoLvl button{
+    font-size: 2.5em;
+    border: 8px solid black;
+  }
+  .isiPem {
+    font-size: 1em;
+  }
+  .level-box {
+    width: 190px;
+    height: 190px;
+  }
+  .level-box span {
+    font-size: 2em;
+  }
+  .txtAudioInfo {
+    font-size: 2em;
+  }
+  .isiPem {
+    font-size: 2.5em;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .level-box {
+    width: 120px;
+    height: 120px;
+  }
+}
