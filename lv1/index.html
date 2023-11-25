@@ -131,11 +131,8 @@
     
       function closeToggle() {
         document.getElementById("pembuka").style.display = "none";
-userPoints += 10;
-// Simpan nilai userPoints di local storage
-localStorage.setItem('userPoints', userPoints);
-document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
-      }
+        userPoints += 10;
+    }
       function closeToggleFQ() {
         document.getElementById("fullQ").style.display = "none";
       userClue = 0;
@@ -385,9 +382,6 @@ function checkAnswer() {
   } else {
     if (correctAnswers.includes(userAnswer)) {
       userPoints += 5;
-// Simpan nilai userPoints di local storage
-localStorage.setItem('userPoints', userPoints);
-document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
       messageText.innerHTML = "Jawaban kamu Benar ! <br>✅";
       answerMessage.className = "message-container correct";
       answerMessage.style.display = "flex";
@@ -427,10 +421,7 @@ document.getElementById("userPoints").innerHTML = `<img class="poin" src="../ass
       document.getElementById("messageTextF").innerHTML = `Salah woi, coba lagi gih! <br><p class="emoji">❌</p>`;
       if (userPoints > 0) {
           userPoints -= 2;
-// Simpan nilai userPoints di local storage
-localStorage.setItem('userPoints', userPoints);
-document.getElementById("userPoints").innerHTML = `<img class="poin" src="../assets/poin.png" alt=""> ${userPoints}`;
-        }
+         }
           userSalah += 1;
         navigator.vibrate(500);
       document.getElementById("falseMessage").className = "message-container incorrect";
