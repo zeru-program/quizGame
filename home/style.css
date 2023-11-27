@@ -25,7 +25,20 @@
         margin-top: 10px;
         border-radius: 3px;
         border: 2px solid black;
+            animation: masukStrt 15s;
       }
+      @keyframes masukStrt {
+        0% {
+          opacity: 0;
+        }
+        60% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      
       .containerStart {
         display: flex;
         justify-content: center;
