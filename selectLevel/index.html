@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pemilihan Level</title>
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+        <link rel="manifest" href="/offline/manifest.json" />
+    </head>
+    <body>
+        <img class="overlay" src="assets/overlay2.png" alt="" />
+
+        <div id="userPoints" class="user-points">
+            <img class="poin" src="assets/poin.png" alt="" />0
+        </div>
+
+        <p class="pilihLevel">Silakan pilih level</p>
+        <br />
+        <div class="level-container">
+            <div class="level-box" onclick="window.location.href='/lv1'">
+                <span class="true">Level 1</span>
+            </div>
+            <div class="level-box" onclick="window.location.href='/lv2'">
+                <span class="true">Level 2</span>
+            </div>
+            <div class="level-box" onclick="window.location.href='/lv3'">
+                <span class="true">Level 3</span>
+            </div>
+            <div class="level-box" onclick="window.location.href='/lv4'">
+                <span class="true">Level 4</span>
+            </div>
+            <div class="level-box" onclick="window.location.href='/lv5'">
+                <span class="true">Level 5</span>
+            </div>
+            <div class="level-box" onclick="terkunci()">
+                <span class="false">Level 6</span>
+            </div>
+            <div class="level-box" onclick="terkunci()">
+                <span class="false">Level 7</span>
+            </div>
+            <div class="level-box" onclick="terkunci()">
+                <span class="false">Level 8</span>
+            </div>
+            <div class="level-box" onclick="terkunci()">
+                <span class="false">Level 9</span>
+            </div>
+            <div class="level-box" onclick="terkunci()">
+                <span class="false">Level 10</span>
+            </div>
+            <!-- Tambahkan kotak-kotak lainnya sesuai kebutuhan -->
+        </div>
+        <div class="infoLvl">
+            <button id="iLvl" onclick="infoLVL()">Info level</button>
+
+            <button
+                id="iLvl"
+                onclick="window.location.href = 'https://wa.link/oldc3x'"
+            >
+                Kirim pertanyaan
+            </button>
+        </div>
+
+        <div id="openiL">
+            <p>
+                Level 1 : berisi pengetahuan umum yang mudah<br />
+                dan tebak benda, serta sendikit matematika
+            </p>
+            <p>
+                Level 2 : berisi pengetahuan umum <br />
+                hal random,mtk,dan jebakan sedikit
+            </p>
+            <p>Level 3 : berisi hal random dan jebakan, tebak tokoh</p>
+            <p>Level 4 : berisi ???</p>
+            <p>Level 5 : berisi hororr</p>
+            <div class="iLv">
+                <button onclick="closeToggleIlv()">OK</button>
+            </div>
+        </div>
+
+        <div id="setting">
+            <p class="txtAudioInfo">Backsound</p>
+            <div class="dalset">
+                <img
+                    class="volOn"
+                    id="onGbrBS"
+                    onclick="offVolumeBS()"
+                    src="assets/onvolume.png"
+                    alt=""
+                />
+
+                <img
+                    class="volOf"
+                    id="ofGbrBS"
+                    onclick="onVolumeBS()"
+                    src="assets/mute.png"
+                    alt=""
+                />
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <p class="txtAudioInfo">Sfx</p>
+            <div class="dalset">
+                <img
+                    class="volOn"
+                    id="onGbrSFX"
+                    onclick="offVolumeSFX()"
+                    src="assets/onvolume.png"
+                    alt=""
+                />
+
+                <img
+                    class="volOf"
+                    id="ofGbrSFX"
+                    onclick="onVolumeSFX()"
+                    src="assets/mute.png"
+                    alt=""
+                />
+            </div>
+            <br />
+            <br />
+
+            <div class="option">
+                <img
+                    class="exit"
+                    src="assets/exit.png"
+                    onclick="exitClick()"
+                    alt=""
+                />
+                <button class="closeSet" onclick="closeToggleST()">OK</button>
+            </div>
+        </div>
+
+        <div class="gear">
+            <img
+                src="assets/gear.png"
+                onclick="settingDisplay()"
+                alt="settings"
+            />
+        </div>
+
+        <div id="popupTerkunci">
+            <p id="isiTerkunci"></p>
+            <br />
+            <br />
+            <br />
+            <button class="closeOK" type="button" onclick="closeOK()">
+                OK
+            </button>
+        </div>
+        <div id="pembuka">
+            <p id="isiPem">
+                Setiap 1 level ada 20 pertanyaan dan masing-masing pertanyaan
+                terdapat clue,<br />
+                jika jawaban benar poin +5 jika salah -2,<br />
+                untuk menggunakan clue perlu 10 poin<br />
+                jadi hati-hati ya
+            </p>
+            <br />
+            <br />
+            <br />
+            <button
+                class="closeOK"
+                id="startLagu"
+                type="button"
+                onclick="closeToggle()"
+            >
+                OK
+            </button>
+        </div>
+        <audio id="myAudio" controls autoplay loop>
+            <source src="assets/backsound.mp3" type="audio/mp3" />
+        </audio>
+        <audio class="sfxAudio" id="myAudioT" controls autoplay>
+            <source src="assets/true.mp3" type="audio/mp3" />
+        </audio>
+        <audio class="sfxAudio" id="myAudioF" controls autoplay>
+            <source src="assets/false.mp3" type="audio/mp3" />
+        </audio>
+        <script type="text/javascript" charset="utf-8">
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker
+                    .register("/offline/service-worker.js")
+                    .then(registration => {
+                        console.log(
+                            "Service Worker registered with scope:",
+                            registration.scope
+                        );
+                    })
+                    .catch(error => {
+                        console.error(
+                            "Service Worker registration failed:",
+                            error
+                        );
+                    });
+            }
+            let userPoints = 0;
+
+            function closeToggle() {
+                document.getElementById("pembuka").style.display = "none";
+            }
+            function terkunci() {
+                document.getElementById("popupTerkunci").style.display = "flex";
+                document.getElementById("isiTerkunci").innerHTML =
+                    "Level masih terkunci";
+            }
+            function closeOK() {
+                document.getElementById("popupTerkunci").style.display = "none";
+            }
+            function closeToggleST() {
+                document.getElementById("setting").style.display = "none";
+            }
+            function closeToggleIlv() {
+                document.getElementById("openiL").style.display = "none";
+            }
+            document
+                .getElementById("startLagu")
+                .addEventListener("click", function () {
+                    var audio = document.getElementById("myAudio");
+                    audio.play();
+                    audio.volume = 0.1;
+                });
+
+            var isSFXMuted = false;
+            var isBSMuted = false;
+
+            /*volume backsound*/
+            function offVolumeBS() {
+                const matiVolB = document.getElementById("myAudio");
+                const displayOfBS = document.getElementById("ofGbrBS");
+                const cutOnBS = document.getElementById("onGbrBS");
+                matiVolB.volume = 0;
+                cutOnBS.style.display = "none";
+                displayOfBS.style.display = "flex";
+                isBSMuted = true;
+            }
+
+            function onVolumeBS() {
+                const nyalaVolB = document.getElementById("myAudio");
+                const displayOnBS = document.getElementById("onGbrBS");
+                const cutOfBS = document.getElementById("ofGbrBS");
+                nyalaVolB.volume = 0.1;
+                cutOfBS.style.display = "none";
+                displayOnBS.style.display = "flex";
+                isBSMuted = false;
+            }
+
+            function offVolumeSFX() {
+                const matiVolT = document.getElementById("myAudioT");
+                const displayOfSFX = document.getElementById("ofGbrSFX");
+                const cutOnSFX = document.getElementById("onGbrSFX");
+                matiVolT.volume = 0;
+                cutOnSFX.style.display = "none";
+                displayOfSFX.style.display = "flex";
+                document.getElementById("myAudioF").volume = 0;
+                isSFXMuted = true;
+            }
+
+            function onVolumeSFX() {
+                const nyalaVolT = document.getElementById("myAudioT");
+                const displayOnSFX = document.getElementById("onGbrSFX");
+                const cutOfSFX = document.getElementById("ofGbrSFX");
+                nyalaVolT.volume = 1;
+                cutOfSFX.style.display = "none";
+                displayOnSFX.style.display = "flex";
+                document.getElementById("myAudioF").volume = 1;
+                isSFXMuted = false;
+            }
+
+            function settingDisplay() {
+                document.getElementById("setting").style.display = " flex";
+            }
+
+            function infoLVL() {
+                document.getElementById("openiL").style.display = "flex";
+            }
+
+            function exitClick() {
+                window.location.href = "/home";
+            }
+
+            window.onload = function () {
+                var audio = document.getElementById("myAudio");
+                var audioF = document.getElementById("myAudioF");
+                var audioT = document.getElementById("myAudioT");
+                audio.pause();
+                audioT.pause();
+                audioF.pause();
+                audio.volume = 0;
+                audioT.volume = 0;
+                audioF.volume = 0;
+                document.getElementById("pembuka").style.display = "flex";
+                shuffleArray(questions);
+                displayQuestion();
+                document.getElementById(
+                    "userPoints"
+                ).innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+            };
+        </script>
+    </body>
+</html>
