@@ -1,0 +1,15 @@
+{
+  "name": "tebak kata random zeru",
+  "short_name": "quiz kata",
+  "description": "sebuah game website yang dibuat oleh justin berisi pertanyaan random dan berisi 5 level untuk sekarang",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#a6a6a6",
+  "icons": [
+    {
+      "src": "/offline/icons.png",
+      "type": "image/png"
+    }
+  ]
+}
