@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game kata</title>
+   <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+        <link rel="manifest" href="/offline/manifest.json" />
+  </head>
+  <body>
+  <img class="overlay" src="assets/overlay2.png" alt="">
+    <div id="setting">
+      <p class="txtAudioInfo">Backsound</p>
+    <div class="dalset">
+      <img class="volOn" id="onGbrBS" onclick="offVolumeBS()" src="assets/onvolume.png" alt="">
+      
+      <img class="volOf" id="ofGbrBS" onclick="onVolumeBS()" src="assets/mute.png" alt="">
+    </div>
+    <br />
+    <br />
+    <br />
+      
+      <p class="txtAudioInfo">Sfx</p>
+    <div class="dalset">
+      <img class="volOn" id="onGbrSFX" onclick="offVolumeSFX()" src="assets/onvolume.png" alt="">
+      
+      <img class="volOf" id="ofGbrSFX" onclick="onVolumeSFX()" src="assets/mute.png" alt="">
+    </div>
+    <br />
+    <br />
+    <div class="dalset">
+    
+    </div>
+    
+      
+    <div class="option">
+      <img class="exit" src="assets/exit.png" onclick="exitClick()" alt="">
+    <button class="closeSet" onclick="closeToggleST()">OK</button>
+    </div>
+  </div>
+
+    <audio id="myAudio" controls autoplay loop>
+  <source src="assets/backsound.mp3" type="audio/mp3">
+</audio>
+    <audio class="sfxAudio" id="myAudioT" controls autoplay>
+  <source src="assets/true.mp3" type="audio/mp3">
+</audio>
+    <audio class="sfxAudio" id="myAudioF" controls autoplay>
+  <source src="assets/false.mp3" type="audio/mp3">
+</audio>
+
+    <div class="gear">
+      
+        <img src="assets/gear.png" onclick="settingDisplay()" alt="settings">
+      
+    </div>
+    
+    <div id="pembuka">
+      <img class="icon" src="assets/icon.png" alt="">
+      <p class="jpembuka">Level ?</p>
+      <br />
+      <p class="ppembuka">
+        Deskripsi level<br />
+        Ancaman level <br><br> Gunakan mode getar atau dering<br> dan volume up untuk kualitas game yang maksimal !
+      </p>
+      <br />
+      <br />
+      <button class="close" id="startLagu" onclick="closeToggle()">X</button>
+    </div>
+    <div id="fullQ">
+      <img class="icon" src="assets/icon.png" alt="">
+      <p id="ppembuka" class="ppembuka">
+      
+      </p>
+      <button class="close" onclick="closeToggleFQ()">Ulang soal</button>
+    </div>
+
+    <div id="userPoints" class="user-points"><img class="poin" src="assets/poin.png" alt="">0</div>
+      <p id="question-counter"></p>
+      <p class="question-counter-per">pertanyaan</p>
+    <div class="container">
+      <h1 id="question"></h1>
+      <input type="text" id="answer" placeholder="Jawabanmu..." cols="20" />
+      <br />
+
+      <button class="button" onclick="checkAnswer()">Jawab</button>
+      <button class="button" onclick="clearText()">
+      Clear
+      </button>
+      <br>
+      <img src="assets/clueIcons.png" onclick="showClue(clueHint)" id="clue">
+    </div>
+    
+    <!-- text clue -->
+    <div id="clueT" class="message-container">
+    </div>
+    
+    <!-- true-->
+    <div id="Message" class="message-container">
+      <p id="messageTextT"></p>
+    </div>
+    
+    <!-- false-->
+    <div id="falseMessage" class="message-container">
+      <img class="icon" src="assets/false.png" alt="">
+      <p id="messageTextF"></p>
+    </div>
+    
+    <!-- unknown-->
+    <div id="unknownMessage" class="message-container">
+      <img class="icon" src="assets/unknown.png" alt="">
+      <p id="messageTextU"></p>
+    </div>
+    
+    
+    <div id="answerMessage" class="message-container">
+      <img class="icon" src="assets/true.png" alt="">
+      <p id="messageText"></p>
+    </div>
+    
+    <div id="clueMessage" class="message-container clue">
+  <p id="clueText"> </p>
+</div>
+
+
+    <script type="text/javascript" charset="utf-8">
+                if ("serviceWorker" in navigator) {
+                navigator.serviceWorker
+                    .register("/offline/service-worker.js")
+                    .then(registration => {
+                        console.log(
+                            "Service Worker registered with scope:",
+                            registration.scope
+                        );
+                    })
+                    .catch(error => {
+                        console.error(
+                            "Service Worker registration failed:",
+                            error
+                        );
+                    });
+            }
+    
+      function closeToggle() {
+        document.getElementById("pembuka").style.display = "none";
+      }
+      function closeToggleFQ() {
+        document.getElementById("fullQ").style.display = "none";
+      userClue = 0;
+      userSalah = 0;
+      }
+      function closeToggleCL() {
+        document.getElementById("clueMessage").style.display = "none";
+        document.getElementById("clueT").style.display = "none";
+      }
+      function closeToggleCL1() {
+        document.getElementById("clueT").style.display = "none";
+      }
+      function closeToggleST() {
+        document.getElementById("setting").style.display = "none";
+      }
+      document.getElementById('startLagu').addEventListener('click', function() {
+    var audio = document.getElementById('myAudio');
+    audio.play();
+    audio.volume = 0.1;
+});
+
+      const questions = [
+  { 
+    clue: "adi mengambil uang teman nya 5rb secara diam-diam. tindakan adi merupakan tindakan?", 
+    answers: ["mengambil"],
+    clueHint: "men_ _ _ _ _ _",
+  },
+  
+  { 
+    clue: "apakah sepeda memiliki gigi?", 
+    answers: ["tidak", "gak"],
+    clueHint: "x",
+  },
+  { 
+    clue: "Apa nama benua terbesar di dunia?", 
+    answers: ["asia"],
+    clueHint: "A _ _ a",
+  },
+  { 
+    clue: "Berapakah rata-rata jumlah hari dalam satu bulan?", 
+    answers: ["30"],
+    clueHint: "3 _",
+  },
+  { 
+    clue: "meja dibuat oleh?", 
+    answers: ["orang"],
+    clueHint: "yang ngebuatnya",
+  },
+  { 
+    clue: "Hewan apa yang selalu terlambat masuk sekolah?", 
+    answers: ["kaki seribu"],
+    clueHint: "👣 1000",
+  },
+  { 
+    clue: "Apakah huruf keempat dalam abjad?", 
+    answers: ["a"],
+    clueHint: "a=1 , b=2 , j=3 , a=4 d=5",
+  },
+  { 
+    clue: "Seorang pria terjebak di dalam gua, ia kebingungan karena gua tersebut gelap. Di tangannya ada lilin dan obor serta rokok yang belum menyala. Apa yang harus ia nyalakan terlebih dahulu?", 
+    answers: ["korek api"],
+    clueHint: "kor _ _ 🔥",
+  },
+  { 
+    clue: "sering dipake buat merebahkan keluh kesah mu saat selesai aktifitas, kira-kira siapakah aku?", 
+    answers: ["kasur"],
+    clueHint: "🛌",
+  },
+  { 
+    clue: "Kalau gajah main drum kelihatan apanya?", 
+    answers: ["hoaxnya", "hoax"],
+    clueHint: "hoax",
+  },
+  { 
+    clue: "Jika ada 1 kilo batu dan ada 1 kilo kapas, ketika dijatuhkan ke atas kaki, apa yang lebih sakit?", 
+    answers: ["kaki", "kakinya", "kaki kita"],
+    clueHint: "k _ _ _",
+  },
+  
+  { 
+    clue: "jika aku+1 = kamu , kamu+(-1) = aku , berapa kali kata ini terlihat??", 
+    answers: ["1", "1 kali"],
+    clueHint: "pilih jawaban nya 1-10",
+  },
+  { 
+    clue: "saat olahraga orang-orang olahraga di?", 
+    answers: ["lapangan"],
+    clueHint: "lapang _ _",
+  },
+  { 
+    clue: "Telat makan bisa menyebabkan?", 
+    answers: ["sakit perut"],
+    clueHint: "sakit perut",
+  },
+  { 
+    clue: "dalam pengobatan selain ke rumah sakit bisa ke?", 
+    answers: ["pukesmas"],
+    clueHint: "pukesmas lah",
+  },
+  { 
+    clue: "buah yang dipotong-potong, di uleg, campur gula dan cabai, bentuknya jadinya...",
+    answers: ["rusak"],
+    clueHint: "r _ s _ _",
+  },
+  { 
+    clue: 'ada berapa pisau yang ada? <br> <p class="mencar1">🔪</p><p class="mencar2">🔪</p>', 
+    answers: ["2", "1"],
+    clueHint: "liat kanan kiri",
+  },
+  { 
+    clue: "ini seharusnya gampang 5x10+3+2-55 = ...", 
+    answers: ["0"],
+    clueHint: "masa ga tau?! jawaban nya 0",
+  },
+  { 
+    clue: "kalau jarak 27km sama 27m jauhan mana??", 
+    answers: ["27km"],
+    clueHint: "27km lah",
+  },
+  { 
+    clue: "Apa nama alat musik yang dipukul?", 
+    answers: ["kendang", "gendang"],
+    clueHint: "kendang",
+  },
+];
+
+      let currentQuestion = 0;
+      let userPoints = 0;
+      let userClue = 0;
+      let userSalah = 0;
+    
+
+  function displayQuestion() {
+  const currentQuestionObj = questions[currentQuestion];
+  document.getElementById("question").innerHTML = currentQuestionObj.clue;
+
+  const questionCounter = document.getElementById("question-counter");
+  questionCounter.textContent = `${currentQuestion + 1}/${questions.length}`;
+  
+  const clueImg = document.getElementById("clue");
+  clueImg.onclick = function() {
+    showClue(currentQuestionObj.clueHint);
+  };
+}
+      
+function showClue(clueHint) {
+    document.getElementById("clueT").style.display = "flex";
+    document.getElementById("clueT").innerHTML = `Poin kamu ${userPoints} . <br> Harga clue = 10 poin <br> <button onclick="yes()" class="buttonIjo">Beli</button>
+      <button class="close" onclick="closeToggleCL1()">close</button>`;
+}
+function yes() {
+  const clueHint = questions[currentQuestion].clueHint;
+
+  if (userPoints >= 10) {
+      userPoints -= 10;
+      userClue += 1;
+      document.getElementById("clueText").innerHTML = `Clue: ${clueHint} <br><br> <button class="close" onclick="closeToggleCL()">X</button>`;
+     document.getElementById("clueMessage").style.display = "flex";
+      
+      document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+      
+  }  else {
+      document.getElementById("clueText").innerHTML = `Poin kamu tidak mencukupi!`;
+     document.getElementById("clueMessage").style.display = "flex";
+     setTimeout(function () {
+      document.getElementById("clueMessage").style.display = "none";
+      document.getElementById("clueT").style.display = "none";
+    }, 1200);
+    // Poin tidak mencukupi
+  }
+  
+}
+
+function settingDisplay() {
+  document.getElementById("setting").style.display = " flex";
+}
+
+var isSFXMuted = false;
+var isBSMuted = false;
+
+/*volume backsound*/
+function offVolumeBS() {
+  const matiVolB = document.getElementById("myAudio");
+  const displayOfBS = document.getElementById("ofGbrBS");
+  const cutOnBS = document.getElementById("onGbrBS");
+  matiVolB.volume = 0;
+  cutOnBS.style.display = "none";
+  displayOfBS.style.display = "flex";
+  isBSMuted = true;
+}
+
+function onVolumeBS() {
+  const nyalaVolB = document.getElementById("myAudio");
+  const displayOnBS = document.getElementById("onGbrBS");
+  const cutOfBS = document.getElementById("ofGbrBS");
+  nyalaVolB.volume = 0.1;
+  cutOfBS.style.display = "none";
+  displayOnBS.style.display = "flex";
+  isBSMuted = false;
+}
+
+function offVolumeSFX() {
+  const matiVolT = document.getElementById("myAudioT");
+  const displayOfSFX = document.getElementById("ofGbrSFX");
+  const cutOnSFX = document.getElementById("onGbrSFX");
+  matiVolT.volume = 0;
+  cutOnSFX.style.display = "none";
+  displayOfSFX.style.display = "flex";
+  document.getElementById("myAudioF").volume = 0;
+  isSFXMuted = true;
+}
+
+function onVolumeSFX() {
+  const nyalaVolT = document.getElementById("myAudioT");
+  const displayOnSFX = document.getElementById("onGbrSFX");
+  const cutOfSFX = document.getElementById("ofGbrSFX");
+  nyalaVolT.volume = 1;
+  cutOfSFX.style.display = "none";
+  displayOnSFX.style.display = "flex";
+  document.getElementById("myAudioF").volume = 1;
+  isSFXMuted = false;
+}
+
+
+function clearText() {
+  document.getElementById("answer").value = "";
+}
+
+function exitClick() {
+  window.location.href = "/selectLevel";
+}
+
+function checkAnswer() {
+  const userAnswer = document
+    .getElementById("answer")
+    .value.trim()
+    .toLowerCase();
+  const correctAnswers = questions[currentQuestion].answers.map(answer => answer.toLowerCase());
+  const answerMessage = document.getElementById("answerMessage");
+  const messageText = document.getElementById("messageText");
+
+  if (userAnswer === "") {
+    document.getElementById("messageTextU").innerHTML = `<br>Masukkan jawaban anda <br> terlebih dahulu ! <br> 🧐`;
+    document.getElementById("unknownMessage").className = "message-container kosong";
+    document.getElementById("unknownMessage").style.display = "flex";
+    /*
+    nextBtn.setAttribute("disabled", true);
+    */
+    setTimeout(function () {
+      
+    document.getElementById("unknownMessage").style.display = "none";
+    }, 1200);
+  } else {
+    if (correctAnswers.includes(userAnswer)) {
+      userPoints += 5;
+      messageText.innerHTML = "Jawaban kamu Benar ! <br>✅";
+      answerMessage.className = "message-container correct";
+      answerMessage.style.display = "flex";
+      const audioTrue = document.getElementById('myAudioT');
+      if (!isSFXMuted) {
+  audioTrue.play();
+  audioTrue.volume = 1;
+      }
+      
+      /*next question sistem*/
+      /*
+      nextBtn.removeAttribute("disabled");
+      */
+      document.getElementById("answer").value = "";
+      currentQuestion++;
+      
+
+      /*sampe sini <*/
+      
+      // Setelah 2 detik, tutup pesan
+
+      setTimeout(function () {
+        answerMessage.style.display = "none";
+      }, 1200);
+      
+      
+      if (currentQuestion < questions.length) {
+        displayQuestion();
+      } else {
+        document.getElementById("fullQ").style.display = "flex";
+        document.getElementById("ppembuka").innerHTML = `Soal terjawab : 20/20 <br> Poin : ${userPoints} <br>Clue terpakai : ${userClue} kali <br>Salah : ${userSalah} kali<br><br>Bagus! semua pertanyaan<br />
+        udah dijawab ama lu! mantap!<br><button class="buttonIjo" onclick="nextQHal()">Next Question</button>`
+        currentQuestion = 0;
+        displayQuestion();
+      }
+    } else {
+      document.getElementById("messageTextF").innerHTML = `Salah woi, coba lagi gih! <br><p class="emoji">❌</p>`;
+      if (userPoints > 0) {
+          userPoints -= 2;
+        }
+          userSalah += 1;
+        navigator.vibrate(500);
+      document.getElementById("falseMessage").className = "message-container incorrect";
+    document.getElementById("falseMessage").style.display = "flex";
+    const audioFalse = document.getElementById('myAudioF');
+    if (!isSFXMuted) {
+  audioFalse.play();
+  audioFalse.volume = 1;
+    }
+  
+    /*
+      nextBtn.setAttribute("disabled", true);
+      */
+      document.getElementById("answer").value = "";
+      
+      setTimeout(function () {
+    document.getElementById("falseMessage").style.display = "none";
+      }, 1500);
+      
+    }
+  }
+  document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`;
+}
+
+      // ...
+ 
+    function nextQHal(){
+      window.location.href = "/lv4";
+    }
+      
+
+      function nextQuestion() {
+        const answerMessage = document.getElementById("answerMessage");
+        answerMessage.style.display = "none"; 
+        
+        
+        document.getElementById("answer").value = "";
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+          displayQuestion();
+        } else {
+          document.getElementById("fullQ").style.display = "flex";
+          currentQuestion = 0;
+          displayQuestion();
+        }
+      }
+      
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      shuffleArray(questions);
+
+      window.onload = function () {
+                var audio = document.getElementById('myAudio');
+        var audioF = document.getElementById("myAudioF");
+        var audioT = document.getElementById("myAudioT");
+        audio.pause();
+        audioT.pause();
+        audioF.pause();
+        audio.volume = 0;
+        audioT.volume = 0;
+        document.getElementById("pembuka").style.display = "flex";
+        shuffleArray(questions); 
+        displayQuestion();
+        document.getElementById("myAudio").audio.play();
+        document.getElementById("userPoints").innerHTML = `<img class="poin" src="assets/poin.png" alt=""> ${userPoints}`
+        
+      };
+    </script>
+  </body>
+</html>
